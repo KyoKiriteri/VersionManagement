@@ -33,6 +33,17 @@ switch (initialInput)
 
         Console.WriteLine("Product inventory");
         productinventory = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("Processing...");
+        id = HighestIDCheck();
+
+        AddNewProduct(id, productname, productprice, productinventory);
+
+        Console.WriteLine("Product " + productname +
+        " has been added with a price of " + productprice +
+        " and inventory of " + productinventory +
+        " residing in slot " + id +
+        " of the database.");
         break;
     case 2:
         //RemoveProduct Method
@@ -67,18 +78,28 @@ static bool AddNewProduct(int newId, string newProductName, int newProductPrice,
     }
 }
 
-
-
-
-if (AddNewProduct(id, productname, productprice, productinventory))
+static int HighestIDCheck()
 {
-    Console.WriteLine("Product " + productname + 
-        " has been added with a price of " + productprice + 
-        " and inventory of " + productinventory + 
-        " residing in slot " + id + 
-        ".");
-}
-else
-{
-    Console.WriteLine("Incorrect data has been inputted.");
+    int currentHighestID = 0;
+
+    using (VersionManagement versionManagement = new())
+    {
+        IQueryable<Product>? products = versionManagement.Products;
+
+        if (products is null)
+        {
+            Console.WriteLine("No products on record.");
+            return 0;
+        }
+
+        foreach (Product product in products)
+        {
+            if (product.Id == currentHighestID + 1)
+            {
+                currentHighestID = product.Id;
+            }
+        }
+        currentHighestID++;
+    }
+    return currentHighestID;
 }
