@@ -10,7 +10,9 @@ namespace VersionManagement
     public class Product
     {
         [Key]
-        public string? Password { get; set; }
-        public string? Username { get; set; }
+        public int? Id { get; set; }
+        public string? ProductName { get; set; }
+        public int? ProductPrice { get; set; }
+        public int? ProductInventory { get; set; }
     }
 }
