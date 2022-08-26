@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace VersionManagement
 {
-    internal class Product
+    public class Product
     {
+        [Key]
+        public string? Password { get; set; }
+        public string? Username { get; set; }
     }
 }
