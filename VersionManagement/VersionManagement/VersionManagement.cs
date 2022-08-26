@@ -7,7 +7,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace VersionManagement
 {
-    internal class VersionManagement
+    public class VersionManagement : DbContext
     {
+        public DbSet<Product>? Products { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string connection = "Data Source=.;" +
+                "Initial Catalog=VersionManagement;" +
+                "User Id=sa;" +
+                "Password=!23#edcvBnmko=9;" +
+                "MultipleActiveResultSets=true;";
+
+            optionsBuilder.UseSqlServer(connection);
+        }
     }
 }
