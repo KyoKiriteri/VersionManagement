@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace VersionManagement
+namespace InventoryManagement
 {
     public class VersionManagement : DbContext
     {
