@@ -17,6 +17,11 @@ static void Start()
     var removeID = 0;
     var removeName = "a";
 
+    var editInput = -1;
+
+    var editID = -1;
+    var editName = "a";
+
     //Starting point for the program
     Console.WriteLine("INVENTORY MANAGEMENT - Input a number for the desider function\n" +
         "1 - Add a new product\n" +
@@ -134,9 +139,66 @@ static void Start()
             break;
         case 3:
             QueringProducts();
-            //PrintProductInventory Method
             break;
         case 4:
+            Console.WriteLine("\n" +
+                "Choose to enter a product ID, go back or exit the program\n" +
+                "1 - Enter ID\n" +
+                "2 - Go back\n" +
+                "0 - Exit the program\n" +
+                "");
+
+            editInput = Convert.ToInt32(Console.ReadLine());
+
+            if (editInput == 1)
+            {
+                Console.WriteLine("Enter the ID of the product of which you want to change the name of");
+                editID = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("\n" +
+                    "Enter the new name");
+                editName = Console.ReadLine();
+
+                Console.WriteLine("\n" +
+                "\n" +
+                "Processing...");
+
+                EditProductName(editID, editName);
+
+                Console.WriteLine("The name of product " + editID + " has been changed to " + editName + ".");
+            }
+            else if (editInput == 2)
+            {
+                Console.WriteLine("\n" +
+                    "\n" +
+                    "");
+                Start();
+            }
+            else if (editInput == 0)
+            {
+                Environment.Exit(0);
+            }
+
+            Console.WriteLine("\n" +
+                "\n" +
+                "Do you want to continue or exit the program?\n" +
+                "1 - Continue\n" +
+                "0 - Exit the program\n" +
+                "");
+            if (Convert.ToInt32(Console.ReadLine()) == 1)
+            {
+                Console.WriteLine("\n" +
+                    "\n" +
+                    "");
+                Start();
+            }
+            else
+            {
+                Environment.Exit(0);
+            }
+
+
+
             //EditProfuctName Method
             break;
         default:
@@ -270,6 +332,25 @@ static void QueringProducts()
         else
         {
             Environment.Exit(0);
+        }
+    }
+}
+
+static bool EditProductName(int editProductID, string newProductName)
+{
+    using (VersionManagement versionManagement = new())
+    {
+        Product editNameProduct = versionManagement.Products.Find(editProductID);
+
+        if (editNameProduct is null)
+        {
+            return false;
+        }
+        else
+        {
+            editNameProduct.ProductName = newProductName;
+            int affected = versionManagement.SaveChanges();
+            return (affected == 1);
         }
     }
 }
